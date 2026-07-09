@@ -16,7 +16,7 @@ import aboutStatsRoutes from "./routes/aboutStatsRoutes.js";
 import aboutGenesisRoutes from "./routes/aboutGenesisRoutes.js";
 import aboutMissionVisionRoutes from "./routes/aboutMissionVisionRoutes.js";
 import aboutVisionaryRoutes from "./routes/aboutVisionaryRoutes.js";
-
+import authRoutes from "./routes/authRoutes.js";
 dotenv.config();
 
 connectDB();
@@ -40,32 +40,33 @@ app.use(
 app.use(
   "/api/cms/agent-network",
   agentNetworkRoutes
-  );
+);
 
-  app.use(
-    "/api/cms/network-density",
-    networkDensityRoutes
-  );
+app.use(
+  "/api/cms/network-density",
+  networkDensityRoutes
+);
 
-  app.use(
-    "/api/cms/about-stats",
-    aboutStatsRoutes
-  );
+app.use(
+  "/api/cms/about-stats",
+  aboutStatsRoutes
+);
 
-  app.use(
-    "/api/cms/about-genesis",
-    aboutGenesisRoutes
-    );
+app.use(
+  "/api/cms/about-genesis",
+  aboutGenesisRoutes
+);
 
-    app.use(
-      "/api/cms/about-mission-vision",
-      aboutMissionVisionRoutes
-    );
+app.use(
+  "/api/cms/about-mission-vision",
+  aboutMissionVisionRoutes
+);
 
-    app.use(
-      "/api/cms/about-visionaries",
-      aboutVisionaryRoutes
-      );
+app.use(
+  "/api/cms/about-visionaries",
+  aboutVisionaryRoutes
+);
+app.use("/api/auth", authRoutes);
 
 const PORT = process.env.PORT || 3000;
 

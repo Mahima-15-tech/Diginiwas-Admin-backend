@@ -13,15 +13,15 @@ router.post(
   "/",
   upload.fields([
     {
-      name: "heroImage1",
+      name: "backgroundImage1",
       maxCount: 1,
     },
     {
-      name: "heroImage2",
+      name: "backgroundImage2",
       maxCount: 1,
     },
     {
-      name: "heroImage3",
+      name: "backgroundImage3",
       maxCount: 1,
     },
   ]),
