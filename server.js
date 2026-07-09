@@ -17,6 +17,7 @@ import aboutGenesisRoutes from "./routes/aboutGenesisRoutes.js";
 import aboutMissionVisionRoutes from "./routes/aboutMissionVisionRoutes.js";
 import aboutVisionaryRoutes from "./routes/aboutVisionaryRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import platformRoutes from "./routes/Platformroutes.js";
 dotenv.config();
 
 connectDB();
@@ -67,6 +68,7 @@ app.use(
   aboutVisionaryRoutes
 );
 app.use("/api/auth", authRoutes);
+app.use("/api", platformRoutes);
 
 const PORT = process.env.PORT || 3000;
 
