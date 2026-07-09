@@ -11,16 +11,16 @@ export default router;
 // import User from '../models/User.js';
 // const router = express.Router();
 // // Temporary route to create proper Admin
-// router.post('/create-admin-securely', async (req, res) => {
+// router.post('/login', async (req, res) => {
 //   try {
 //     // Pehle purane galat admin ko delete karein
-//     await User.deleteOne({ email: 'admin@diginiwas.com' });
+//     await User.deleteOne({ email: 'karanb@diginiwas11.com' });
 
 //     // Naya admin create karein (Mongoose pre-save hook iska password sahi se hash karega)
 //     const admin = new User({
 //       name: "DigiNiwas Admin",
-//       email: "admin@diginiwas.com",
-//       password: "Admin@123", // Plain text likhein, mongoose ise automatic hash kar dega
+//       email: "karanb@diginiwas.com",
+//       password: "Garu@1524", // Plain text likhein, mongoose ise automatic hash kar dega
 //       role: "admin",
 //       permissions: ["manage_users", "manage_properties"],
 //       isActive: true
