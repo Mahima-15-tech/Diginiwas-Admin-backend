@@ -1,39 +1,64 @@
 import Property from "../models/Property.js";
 import generatePropertyId from "../utils/generatePropertyId.js";
+import cloudinary from "../config/cloudinary.js";
 
 export const addProperty = async (req, res) => {
-    try {
-      const propertyId = await generatePropertyId();
-  
-      const images = req.files.map((file) => ({
-        url: file.path,
-        public_id: file.filename,
-      }));
-  
-      const property = await Property.create({
-        propertyId,
-  
-        ...req.body,
-  
-        images,
-      });
-  
-      res.status(201).json({
-        success: true,
-        message: "Property Added Successfully",
-        property,
-      });
-  
-    } catch (error) {
-  
-      console.log(error);
-  
-      res.status(500).json({
-        success: false,
-        message: error.message,
-      });
+  try {
+    const propertyId = await generatePropertyId();
+
+    // Array standard se fields wise image/pdf filter karne ke liye
+    let images = [];
+    let floorPlanUrl = "";
+    let reraCertificateUrl = "";
+
+    // Agar multiple fields use kar rahe hain toh files array/object form m aati h
+    if (req.files) {
+      if (Array.isArray(req.files)) {
+        // Purana tarika agar single array h
+        images = req.files
+          .filter(file => file.fieldname === "images")
+          .map((file) => ({ url: file.path, public_id: file.filename }));
+      } else {
+        // Agar fields upload h
+        if (req.files.images) {
+          images = req.files.images.map((file) => ({ url: file.path, public_id: file.filename }));
+        }
+        if (req.files.floorPlan) floorPlanUrl = req.files.floorPlan[0].path;
+        if (req.files.reraCertificate) reraCertificateUrl = req.files.reraCertificate[0].path;
+      }
     }
-  };
+
+    // String arrays ko object se normal array m parse krna pad skta h agar frontend stringify krke bheje
+    let parsedAmenities = req.body.amenities;
+    let parsedTags = req.body.tags;
+    
+    if (typeof req.body.amenities === "string") parsedAmenities = JSON.parse(req.body.amenities || "[]");
+    if (typeof req.body.tags === "string") parsedTags = JSON.parse(req.body.tags || "[]");
+
+    const property = await Property.create({
+      ...req.body,
+      propertyId,
+      images,
+      floorPlan: floorPlanUrl || req.body.floorPlan,
+      reraCertificate: reraCertificateUrl || req.body.reraCertificate,
+      amenities: parsedAmenities,
+      tags: parsedTags
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Property Added Successfully",
+      property,
+    });
+
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
   export const getAllProperties = async (req, res) => {
     try {

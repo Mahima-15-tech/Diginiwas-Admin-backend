@@ -12,29 +12,36 @@ import {
   searchProperties,
   filterProperties,
   propertyDashboard,
-  
 } from "../controllers/propertyController.js";
+
+const propertyUpload = upload.fields([
+  { name: "images", maxCount: 20 },
+  { name: "floorPlan", maxCount: 1 },
+  { name: "reraCertificate", maxCount: 1 },
+  { name: "video", maxCount: 1 },
+]);
 
 const router = express.Router();
 
 router.post(
   "/",
-  upload.array("images", 20),
+  propertyUpload,  
   addProperty
 );
 
 router.get("/", getAllProperties);
 router.get("/:id", getPropertyById);
-router.put(
-    "/:id",
-    upload.array("images",10),
-    updateProperty
-  );
 
-  router.delete("/:id", deleteProperty);
-  router.patch("/:id/status", changePropertyStatus);
-  router.get("/search/list", searchProperties);
-  router.get("/filter/list", filterProperties);
-  router.get("/dashboard/stats", propertyDashboard);
+router.put(
+  "/:id",
+  propertyUpload,  
+  updateProperty
+);
+
+router.delete("/:id", deleteProperty);
+router.patch("/:id/status", changePropertyStatus);
+router.get("/search/list", searchProperties);
+router.get("/filter/list", filterProperties);
+router.get("/dashboard/stats", propertyDashboard);
 
 export default router;

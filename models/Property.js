@@ -98,6 +98,7 @@ const propertySchema = new mongoose.Schema(
     reraCertificate: String,
 
     videoLink: String,
+    video: String, 
 
     tags: [
       {
