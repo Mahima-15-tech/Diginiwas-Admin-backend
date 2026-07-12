@@ -1,152 +1,20 @@
-// import HeroSection from "../models/HeroSection.js";
-// import cloudinary from "../config/cloudinary.js";
-
-// export const saveHeroSection = async (req, res) => {
-//   try {
-//     const {
-//         headingLine1,
-//         headingLine2,
-//         verifiedAgents,
-//         propertiesListed,
-//         happyCustomers,
-//         localitiesCovered,
-//       } = req.body;
-    
-
-//     let hero = await HeroSection.findOne();
-
-//     if (!hero) {
-//       hero = new HeroSection();
-//     }
-
-//     hero.headingLine1 = headingLine1;
-//     hero.headingLine2 = headingLine2;
-//     hero.verifiedAgents = verifiedAgents;
-// hero.propertiesListed = propertiesListed;
-// hero.happyCustomers = happyCustomers;
-// hero.localitiesCovered = localitiesCovered;
-
-//     if (req.files && req.files.heroImage1?.length > 0) {
-//       if (hero.heroImage1?.public_id) {
-//         await cloudinary.uploader.destroy(hero.heroImage1.public_id);
-//       }
-
-//       hero.heroImage1 = {
-//         url: req.files.heroImage1[0].path,
-//         public_id: req.files.heroImage1[0].filename,
-//       };
-//     }
-
-//     if (req.files && req.files.heroImage2?.length > 0) {
-//       if (hero.heroImage2?.public_id) {
-//         await cloudinary.uploader.destroy(hero.heroImage2.public_id);
-//       }
-
-//       hero.heroImage2 = {
-//         url: req.files.heroImage2[0].path,
-//         public_id: req.files.heroImage2[0].filename,
-//       };
-//     }
-
-//     if (req.files && req.files.heroImage3?.length > 0) {
-//       if (hero.heroImage3?.public_id) {
-//         await cloudinary.uploader.destroy(hero.heroImage3.public_id);
-//       }
-
-//       hero.heroImage3 = {
-//         url: req.files.heroImage3[0].path,
-//         public_id: req.files.heroImage3[0].filename,
-//       };
-//     }
-
-//     await hero.save();
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Hero Section Updated Successfully",
-//       hero,
-//     });
-//   } catch (error) {
-//     console.log(error);
-
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
-
-// export const getHeroSection = async (req, res) => {
-//   try {
-//     const hero = await HeroSection.findOne();
-
-//     res.status(200).json({
-//       success: true,
-//       hero,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
-
-// export const deleteHeroImage = async (req, res) => {
-//   try {
-//     const { imageNo } = req.body;
-
-//     const hero = await HeroSection.findOne();
-
-//     if (!hero) {
-//       return res.status(404).json({
-//         success: false,
-//         message: "Hero Section Not Found",
-//       });
-//     }
-
-//     const field = `heroImage${imageNo}`;
-
-//     if (hero[field]?.public_id) {
-//       await cloudinary.uploader.destroy(hero[field].public_id);
-//     }
-
-//     hero[field] = {
-//       url: "",
-//       public_id: "",
-//     };
-
-//     await hero.save();
-
-//     res.status(200).json({
-//       success: true,
-//       message: "Image Deleted Successfully",
-//       hero,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       success: false,
-//       message: error.message,
-//     });
-//   }
-// };
-
-
 import HeroSection from "../models/HeroSection.js";
 import cloudinary from "../config/cloudinary.js";
 
 export const saveHeroSection = async (req, res) => {
   try {
     const {
-      headingLine1,
-      headingLine2,
-      verifiedAgents,
-      propertiesListed,
-      happyCustomers,
-      localitiesCovered,
-    } = req.body;
+        headingLine1,
+        headingLine2,
+        verifiedAgents,
+        propertiesListed,
+        happyCustomers,
+        localitiesCovered,
+      } = req.body;
+    
 
     let hero = await HeroSection.findOne();
+
     if (!hero) {
       hero = new HeroSection();
     }
@@ -154,26 +22,41 @@ export const saveHeroSection = async (req, res) => {
     hero.headingLine1 = headingLine1;
     hero.headingLine2 = headingLine2;
     hero.verifiedAgents = verifiedAgents;
-    hero.propertiesListed = propertiesListed;
-    hero.happyCustomers = happyCustomers;
-    hero.localitiesCovered = localitiesCovered;
+hero.propertiesListed = propertiesListed;
+hero.happyCustomers = happyCustomers;
+hero.localitiesCovered = localitiesCovered;
 
-    // Loop through the 3 background images dynamically
-    for (let i = 1; i <= 3; i++) {
-      const fieldName = `backgroundImage${i}`;
-      
-      if (req.files && req.files[fieldName]?.length > 0) {
-        // Old image check and cleanup from Cloudinary
-        if (hero[fieldName]?.public_id) {
-          await cloudinary.uploader.destroy(hero[fieldName].public_id);
-        }
-
-        // New image update
-        hero[fieldName] = {
-          url: req.files[fieldName][0].path,
-          public_id: req.files[fieldName][0].filename,
-        };
+    if (req.files && req.files.heroImage1?.length > 0) {
+      if (hero.heroImage1?.public_id) {
+        await cloudinary.uploader.destroy(hero.heroImage1.public_id);
       }
+
+      hero.heroImage1 = {
+        url: req.files.heroImage1[0].path,
+        public_id: req.files.heroImage1[0].filename,
+      };
+    }
+
+    if (req.files && req.files.heroImage2?.length > 0) {
+      if (hero.heroImage2?.public_id) {
+        await cloudinary.uploader.destroy(hero.heroImage2.public_id);
+      }
+
+      hero.heroImage2 = {
+        url: req.files.heroImage2[0].path,
+        public_id: req.files.heroImage2[0].filename,
+      };
+    }
+
+    if (req.files && req.files.heroImage3?.length > 0) {
+      if (hero.heroImage3?.public_id) {
+        await cloudinary.uploader.destroy(hero.heroImage3.public_id);
+      }
+
+      hero.heroImage3 = {
+        url: req.files.heroImage3[0].path,
+        public_id: req.files.heroImage3[0].filename,
+      };
     }
 
     await hero.save();
@@ -185,6 +68,7 @@ export const saveHeroSection = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
+
     res.status(500).json({
       success: false,
       message: error.message,
@@ -195,6 +79,7 @@ export const saveHeroSection = async (req, res) => {
 export const getHeroSection = async (req, res) => {
   try {
     const hero = await HeroSection.findOne();
+
     res.status(200).json({
       success: true,
       hero,
@@ -210,6 +95,7 @@ export const getHeroSection = async (req, res) => {
 export const deleteHeroImage = async (req, res) => {
   try {
     const { imageNo } = req.body;
+
     const hero = await HeroSection.findOne();
 
     if (!hero) {
@@ -219,7 +105,7 @@ export const deleteHeroImage = async (req, res) => {
       });
     }
 
-    const field = `backgroundImage${imageNo}`;
+    const field = `heroImage${imageNo}`;
 
     if (hero[field]?.public_id) {
       await cloudinary.uploader.destroy(hero[field].public_id);
@@ -244,3 +130,4 @@ export const deleteHeroImage = async (req, res) => {
     });
   }
 };
+
