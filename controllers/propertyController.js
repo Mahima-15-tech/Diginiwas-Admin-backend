@@ -61,6 +61,7 @@ export const addProperty = async (req, res) => {
 };
 
   export const getAllProperties = async (req, res) => {
+    console.log("Fetching all properties...", req.body);
     try {
       const properties = await Property.find().sort({ createdAt: -1 });
   
