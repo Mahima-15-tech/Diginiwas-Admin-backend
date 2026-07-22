@@ -12,6 +12,7 @@ import {
   searchProperties,
   filterProperties,
   propertyDashboard,
+  getAllPropertiesbyfilter
 } from "../controllers/propertyController.js";
 
 const propertyUpload = upload.fields([
@@ -30,6 +31,8 @@ router.post(
 );
 
 router.get("/", getAllProperties);
+
+router.get("/filter", getAllPropertiesbyfilter);
 router.get("/:id", getPropertyById);
 
 router.put(

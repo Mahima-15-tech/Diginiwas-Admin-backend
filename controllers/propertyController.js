@@ -79,6 +79,47 @@ export const addProperty = async (req, res) => {
       });
     }
   };
+export const getAllPropertiesbyfilter = async (req, res) => {
+  try {
+    const { city, propertyType, transactionType } = req.query;
+
+    let filterQuery = {};
+
+    // 1. City Filter (Case-insensitive) -> Matches "jaipur"
+    if (city && city.trim() !== "") {
+      filterQuery.city = { $regex: new RegExp(`^${city.trim()}$`, "i") };
+    }
+
+    // 2. Transaction Type Filter -> Matches "Sale"
+    if (transactionType && transactionType.trim() !== "" && transactionType.toLowerCase() !== "search") {
+      filterQuery.transactionType = { $regex: new RegExp(`^${transactionType.trim()}$`, "i") };
+    }
+
+    // 3. Category / Property Type Filter -> Matches "Apartment", "House", etc.
+    if (propertyType && propertyType.trim() !== "") {
+      filterQuery.$or = [
+        { category: { $regex: propertyType.trim(), $options: "i" } },
+        { propertyType: { $regex: propertyType.trim(), $options: "i" } }
+      ];
+    }
+
+    // Database query execution
+    const properties = await Property.find(filterQuery).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: properties.length,
+      properties,
+    });
+  } catch (error) {
+    console.error("Filter Error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
   export const getPropertyById = async (req, res) => {
     try {
