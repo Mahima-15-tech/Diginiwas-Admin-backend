@@ -79,6 +79,7 @@ export const addProperty = async (req, res) => {
       });
     }
   };
+
 export const getAllPropertiesbyfilter = async (req, res) => {
   try {
     const { city, propertyType, transactionType } = req.query;
